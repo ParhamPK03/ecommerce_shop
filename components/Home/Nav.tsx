@@ -12,8 +12,9 @@ const Nav = () => {
       <div className="flex items-center justify-between w-[95%] md:w-4/5 mx-auto h-full">
         {/* Logo */}
         <Link href="/">
-          <Image src="/images/logo.png" alt="logo" width={140} height={140} />
+          <Image src="/images/logo.png" alt="logo" width={140} height={140} priority />
         </Link>
+
         {/* Icons */}
         <div className="flex items-center space-x-6">
           {/* Search Box */}
@@ -23,15 +24,17 @@ const Nav = () => {
             cursor={"pointer"}
             className="fill-white hover:fill-pink-400 hover:text-pink-400 duration-200"
           />
+
           {/* ShoppingCartButton */}
           <ShoppingCartButton />
-          {/* User Button */}
 
-          {/* SignIn User */}
+          {/* User Button */}
+          {/* Show User's profile icon when signed in */}
           <SignedIn>
             <UserButton />
           </SignedIn>
-          {/* Not SignIn */}
+
+          {/* Show sign-in button when signed out */}
           <SignedOut>
             <SignInButton>
               <UserIcon size={26} cursor={"pointer"} />
