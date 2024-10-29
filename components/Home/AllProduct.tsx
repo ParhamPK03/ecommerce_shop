@@ -22,7 +22,7 @@ const AllProduct = () => {
       }
     };
     getData();
-  });
+  }, []);
 
   return (
     <div className="pt-16 pb-12">
