@@ -1,9 +1,12 @@
 "use client";
+import { addItem } from "@/store/cartSlice";
 import { Product } from "@/typing";
+import { RootState } from "@reduxjs/toolkit/query";
 import { HeartIcon, ShoppingBagIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 type Props = {
   product: Product;
@@ -12,6 +15,14 @@ type Props = {
 const ProductCard = ({ product }: Props) => {
   const num = Math.round(product.rating.rate);
   const ratingArray = new Array(num).fill(0);
+
+  const items = useSelector((state: RootState) => state.cart.items);
+
+  const dispatch = useDispatch();
+
+  const addToCartHandler = (product: Product) => {
+    dispatchEvent(addItem(product));
+  };
 
   return (
     <div className="p-4">
@@ -58,10 +69,15 @@ const ProductCard = ({ product }: Props) => {
       </div>
       {/* Buttons */}
       <div className="mt-4 flex items-center space-x-2">
-        <button className="bg-black/80 text-white rounded-lg p-2">
+        <button
+          onClick={() => {
+            addToCartHandler(product);
+          }}
+          className="bg-black/80 text-white rounded-[6px] p-2"
+        >
           <ShoppingBagIcon size={18} />
         </button>
-        <button className="bg-red-500 text-white rounded-lg p-2">
+        <button className="bg-red-500 text-white rounded-[6px] p-2">
           <HeartIcon size={18} />
         </button>
       </div>

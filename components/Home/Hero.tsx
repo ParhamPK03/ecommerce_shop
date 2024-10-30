@@ -19,13 +19,29 @@ const Hero = () => {
             officia quaerat sed fugiat sunt ad.
           </p>
           <div className="flex mt-6 items-center space-x-4">
-            <button size={"lg"} className="bg-blue-700">Shop Now</button>
-            <button size={"lg"}>Explore More</button>
+            <button
+              size={"lg"}
+              className="bg-blue-700 py-2.5 px-6 rounded-[6px] text-white"
+            >
+              Shop Now
+            </button>
+            <button
+              className="py-2.5 px-6 rounded-[6px] text-white bg-black/90"
+              size={"lg"}
+            >
+              Explore More
+            </button>
           </div>
         </div>
         {/* Image Content */}
         <div className="hidden lg:block">
-            <Image src="/images/hero.svg" alt="hero" width={600} height={600} className="lg:h-[50%] lg:w-[50%] xl:w-[80%] xl:h-[80%]"/>
+          <Image
+            src="/images/hero.svg"
+            alt="hero"
+            width={600}
+            height={600}
+            className="lg:h-[50%] lg:w-[50%] xl:w-[80%] xl:h-[80%]"
+          />
         </div>
       </div>
     </div>
