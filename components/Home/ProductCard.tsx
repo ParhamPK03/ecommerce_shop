@@ -1,6 +1,6 @@
 "use client";
 import { Product } from "@/typing";
-import { StarIcon } from "lucide-react";
+import { HeartIcon, ShoppingBagIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -46,6 +46,24 @@ const ProductCard = ({ product }: Props) => {
             />
           );
         })}
+      </div>
+      {/* Pricing */}
+      <div className="flex items-center mt-2 space-x-2">
+        <p className="text-black text-base line-through font-semibold opacity-50">{`$${(
+          product.price + 10
+        ).toFixed(2)}`}</p>
+        <p className="text-black text-lg font-bold opacity-80">
+          ${product.price}
+        </p>
+      </div>
+      {/* Buttons */}
+      <div className="mt-4 flex items-center space-x-2">
+        <button className="bg-black/80 text-white rounded-lg p-2">
+          <ShoppingBagIcon size={18} />
+        </button>
+        <button className="bg-red-500 text-white rounded-lg p-2">
+          <HeartIcon size={18} />
+        </button>
       </div>
     </div>
   );

@@ -1,10 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@layer base {
-  :root {
-    --radius: 0.5rem
+
+@layer components {
+  .footer_title {
+    @apply text-xl text-black mb-6;
+  }
+  .footer_link {
+    @apply text-black text-[15px] opacity-90 mb-4 w-fit cursor-pointer hover:text-yellow-600;
   }
 }
-
- 
