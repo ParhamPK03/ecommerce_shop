@@ -16,15 +16,13 @@ const ProductCard = ({ product }: Props) => {
   const num = Math.round(product.rating.rate);
   const ratingArray = new Array(num).fill(0);
 
-  const items = useSelector((state: RootState) => state.cart.items);
-
   const dispatch = useDispatch();
 
   const addToCartHandler = (product: Product) => {
-    dispatchEvent(addItem(product));
+    dispatch(addItem(product));
   };
 
-  return (
+  return ( 
     <div className="p-4">
       <div className="w-[200px] h-[150px]">
         <Image
