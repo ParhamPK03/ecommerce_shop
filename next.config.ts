@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  swcMinify: true, // فعال‌سازی کاهش‌دهنده SWC
+  reactStrictMode: true, // فعال‌سازی حالت Strict React
+  experimental: {
+    appDir: true, // اگر از دایرکتوری اپلیکیشن استفاده می‌کنید
+  },
 };
 
 export default nextConfig;
