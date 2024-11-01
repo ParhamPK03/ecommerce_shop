@@ -14,21 +14,21 @@ export interface CartItem {
 }
 
 interface CartState {
-  items: CartItem[]; // اصلاح نام از itemes به items
+  items: CartItem[];
 }
 
 const initialState: CartState = {
-  items: [],
+  items:
+    typeof window !== "undefined" && localStorage.getItem("cart")
+      ? JSON.parse(localStorage.getItem("cart") as string)
+      : [],
 };
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addItem: (
-      state,
-      action: PayloadAction<Omit<CartItem, "quantity">>
-    ) => {
+    addItem: (state, action: PayloadAction<Omit<CartItem, "quantity">>) => {
       const existingItem = state.items.find(
         (item) => item.id === action.payload.id
       );
@@ -39,10 +39,7 @@ const cartSlice = createSlice({
       }
     },
 
-    removeItem: (
-      state,
-      action: PayloadAction<{ id: number }>
-    ) => {
+    removeItem: (state, action: PayloadAction<{ id: number }>) => {
       const existingItem = state.items.find(
         (item) => item.id === action.payload.id
       );
@@ -50,11 +47,13 @@ const cartSlice = createSlice({
         if (existingItem.quantity > 1) {
           existingItem.quantity -= 1;
         } else {
-          state.items = state.items.filter((item) => item.id !== action.payload.id);
+          state.items = state.items.filter(
+            (item) => item.id !== action.payload.id
+          );
         }
       }
     },
-    
+
     clearCart: (state) => {
       state.items = [];
     },

@@ -1,12 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
-import CartReducer from "./cartSlice";
+import cartReducer from "./cartSlice";
 
 const store = configureStore({
   reducer: {
-    cart: CartReducer,
+    cart: cartReducer,
   },
+});
+
+
+store.subscribe(() => {
+  localStorage.setItem("cart", JSON.stringify(store.getState().cart.items));
 });
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AddDispatch = typeof store.dispatch;
-export default store; 
+export default store;
