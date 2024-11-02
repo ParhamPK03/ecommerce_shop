@@ -5,8 +5,8 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import AddToCart from "../add-cart";
 import ProductCard from "@/components/Home/ProductCard";
-import { GetServerSideProps } from "next";
 
+ 
 interface Product {
   id: number;
   title: string;
@@ -19,12 +19,16 @@ interface Product {
     count: number;
   };
 }
-const ProductDetails = ({ id }: { id: string }) => {
+
+ 
+const ProductDetails = ({ params }: { params: { id: string } }) => {
+  const { id } = params;
   const [singleProduct, setSingleProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
+ 
     const fetchProductData = async () => {
       try {
         const product = await getSingleProduct(id);
@@ -110,14 +114,6 @@ const ProductDetails = ({ id }: { id: string }) => {
       </div>
     </div>
   );
-};
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.params!;
-
-  return {
-    props: { id },
-  };
 };
 
 export default ProductDetails;
