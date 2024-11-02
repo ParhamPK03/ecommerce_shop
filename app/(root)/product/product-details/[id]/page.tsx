@@ -5,6 +5,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import AddToCart from "../add-cart";
 import ProductCard from "@/components/Home/ProductCard";
+import { GetServerSideProps } from "next";
 
 interface Product {
   id: number;
@@ -18,48 +19,27 @@ interface Product {
     count: number;
   };
 }
-
- 
-interface Params {
-  id: Promise<string>; 
-}
-
-const ProductDetails = ({ params }: { params: Params }) => {
-  const [id, setId] = useState<string | null>(null);
+const ProductDetails = ({ id }: { id: string }) => {
   const [singleProduct, setSingleProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // دریافت id از Promise
-    const fetchId = async () => {
-      const idValue = await params.id;
-      setId(idValue);
+    const fetchProductData = async () => {
+      try {
+        const product = await getSingleProduct(id);
+        setSingleProduct(product);
+
+        const productsByCategory = await getProductByCategory(product.category);
+        setRelatedProducts(productsByCategory);
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    fetchId();
-  }, [params]);
-
-  useEffect(() => {
-    if (id) {
-      const fetchProductData = async () => {
-        try {
-          const product = await getSingleProduct(id);
-          setSingleProduct(product);
-
-          const productsByCategory = await getProductByCategory(
-            product.category
-          );
-          setRelatedProducts(productsByCategory);
-        } catch (error) {
-          console.error("Error fetching product data:", error);
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchProductData();
-    }
+    fetchProductData();
   }, [id]);
 
   if (loading) {
@@ -130,6 +110,14 @@ const ProductDetails = ({ params }: { params: Params }) => {
       </div>
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id } = context.params!;
+
+  return {
+    props: { id },
+  };
 };
 
 export default ProductDetails;
