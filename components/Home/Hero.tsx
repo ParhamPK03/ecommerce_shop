@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import { Button } from "../ui/button";
 
 const Hero = () => {
   return (
@@ -19,18 +20,18 @@ const Hero = () => {
             officia quaerat sed fugiat sunt ad.
           </p>
           <div className="flex mt-6 items-center space-x-4">
-            <button
+            <Button
               size={"lg"}
-              className="bg-blue-700 py-2.5 px-6 rounded-[6px] text-white"
+              className="bg-blue-700 hover:bg-blue-900  rounded-[6px] text-white"
             >
               Shop Now
-            </button>
-            <button
-              className="py-2.5 px-6 rounded-[6px] text-white bg-black/90"
+            </Button>
+            <Button
+              className="rounded-[6px] text-white bg-black/90"
               size={"lg"}
             >
               Explore More
-            </button>
+            </Button>
           </div>
         </div>
         {/* Image Content */}

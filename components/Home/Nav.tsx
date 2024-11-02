@@ -39,7 +39,7 @@ const Nav = () => {
           {/* Show sign-in button when signed out */}
           <SignedOut>
             <SignInButton>
-              <UserIcon size={26} cursor={"pointer"} />
+              <UserIcon size={26} cursor={"pointer"} className="hover:fill-blue-200 rounded-full duration-300" />
             </SignInButton>
           </SignedOut>
         </div>

@@ -79,10 +79,10 @@ const ProductCard = ({ product }: Props) => {
           }}
           className="bg-black/80 text-white rounded-[6px] p-2"
         >
-          <ShoppingBagIcon size={18} />
+          <ShoppingBagIcon size={18} className="hover:scale-125 duration-300"/>
         </button>
         <button className="bg-red-500 text-white rounded-[6px] p-2">
-          <HeartIcon size={18} />
+          <HeartIcon size={18} className="hover:scale-125 duration-300"/>
         </button>
       </div>
     </div>
