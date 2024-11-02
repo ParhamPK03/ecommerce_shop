@@ -19,8 +19,6 @@ interface Product {
   };
 }
 
-// You may not need to specify a type for `params` here,
-// or you can define it based on your route structure.
 const ProductDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
 
@@ -30,13 +28,17 @@ const ProductDetails = ({ params }: { params: { id: string } }) => {
 
   useEffect(() => {
     const fetchProductData = async () => {
-      const product = await getSingleProduct(id);
-      setSingleProduct(product);
+      try {
+        const product = await getSingleProduct(id);
+        setSingleProduct(product);
 
-      const productsByCategory = await getProductByCategory(product.category);
-      setRelatedProducts(productsByCategory);
-
-      setLoading(false);
+        const productsByCategory = await getProductByCategory(product.category);
+        setRelatedProducts(productsByCategory);
+      } catch (error) {
+        console.error("Error fetching product data:", error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchProductData();
