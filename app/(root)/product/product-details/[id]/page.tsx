@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import AddToCart from "../add-cart";
 import ProductCard from "@/components/Home/ProductCard";
 
-
 interface Product {
   id: number;
   title: string;
@@ -20,30 +19,47 @@ interface Product {
   };
 }
 
+ 
+interface Params {
+  id: Promise<string>; 
+}
 
-const ProductDetails = ({ params }: { params: Record<string, string> }) => {
-  const { id } = params;
-
+const ProductDetails = ({ params }: { params: Params }) => {
+  const [id, setId] = useState<string | null>(null);
   const [singleProduct, setSingleProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchProductData = async () => {
-      try {
-        const product = await getSingleProduct(id);
-        setSingleProduct(product);
-
-        const productsByCategory = await getProductByCategory(product.category);
-        setRelatedProducts(productsByCategory);
-      } catch (error) {
-        console.error("Error fetching product data:", error);
-      } finally {
-        setLoading(false);
-      }
+    // دریافت id از Promise
+    const fetchId = async () => {
+      const idValue = await params.id;
+      setId(idValue);
     };
 
-    fetchProductData();
+    fetchId();
+  }, [params]);
+
+  useEffect(() => {
+    if (id) {
+      const fetchProductData = async () => {
+        try {
+          const product = await getSingleProduct(id);
+          setSingleProduct(product);
+
+          const productsByCategory = await getProductByCategory(
+            product.category
+          );
+          setRelatedProducts(productsByCategory);
+        } catch (error) {
+          console.error("Error fetching product data:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchProductData();
+    }
   }, [id]);
 
   if (loading) {
