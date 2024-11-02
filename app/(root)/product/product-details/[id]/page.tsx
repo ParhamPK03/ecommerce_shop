@@ -23,7 +23,7 @@ interface PageProps {
   params: { id: string };
 }
 
-const ProductDetails: React.FC<PageProps> = ({ params }) => {
+const ProductDetails = ({ params }: PageProps) => {
   const { id } = params;
   const [singleProduct, setSingleProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
@@ -31,12 +31,19 @@ const ProductDetails: React.FC<PageProps> = ({ params }) => {
 
   useEffect(() => {
     const fetchProductData = async () => {
+      setLoading(true);
       try {
+        // دریافت اطلاعات محصول با استفاده از ID
         const product = await getSingleProduct(id);
         setSingleProduct(product);
 
-        const productsByCategory = await getProductByCategory(product.category);
-        setRelatedProducts(productsByCategory);
+        // دریافت محصولات مرتبط بر اساس دسته‌بندی
+        if (product && product.category) {
+          const productsByCategory = await getProductByCategory(
+            product.category
+          );
+          setRelatedProducts(productsByCategory);
+        }
       } catch (error) {
         console.error("Error fetching product data:", error);
       } finally {
@@ -51,7 +58,7 @@ const ProductDetails: React.FC<PageProps> = ({ params }) => {
     return <div>Loading...</div>;
   }
 
-  if (!singleProduct) return null;
+  if (!singleProduct) return <div>محصولی یافت نشد</div>;
 
   const num = Math.round(singleProduct.rating.rate);
   const starArray = new Array(num).fill(0);
