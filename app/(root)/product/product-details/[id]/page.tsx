@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import AddToCart from "../add-cart";
 import ProductCard from "@/components/Home/ProductCard";
 
- 
+// اینترفیس برای داده‌های محصول
 interface Product {
   id: number;
   title: string;
@@ -20,15 +20,17 @@ interface Product {
   };
 }
 
- 
-const ProductDetails = ({ params }: { params: { id: string } }) => {
+interface PageProps {
+  params: { id: string };
+}
+
+const ProductDetails = ({ params }: PageProps) => {
   const { id } = params;
   const [singleProduct, setSingleProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
- 
     const fetchProductData = async () => {
       try {
         const product = await getSingleProduct(id);
