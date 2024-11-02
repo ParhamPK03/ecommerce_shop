@@ -1,7 +1,7 @@
-"use client"; // افزودن این خط برای مشخص کردن کامپوننت به عنوان Client Component
+"use client";
 
 import { toast } from "@/hooks/use-toast";
-import { addItem, CartItem } from "@/store/cartSlice";
+import { addItem } from "@/store/cartSlice";
 import { Product } from "@/typing";
 import React from "react";
 import { useDispatch } from "react-redux";

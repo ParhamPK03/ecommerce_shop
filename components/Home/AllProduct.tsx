@@ -5,6 +5,19 @@ import { Loader } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import ProductCard from "./ProductCard";
 
+interface Product {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  image: string;
+  category: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
+}
+
 const AllProduct = () => {
   const [products, setProducts] = useState<Product[] | null>(null);
   const [loading, setLoading] = useState(true);

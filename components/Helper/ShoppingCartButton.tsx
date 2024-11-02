@@ -1,5 +1,5 @@
 "use client";
-import { RootState } from "@reduxjs/toolkit/query";
+import { RootState } from "@/store/store";
 import { ShoppingBagIcon } from "lucide-react";
 import React from "react";
 import { useSelector } from "react-redux";
@@ -8,7 +8,10 @@ import CartSidebar from "./CartSidebar";
 
 const ShoppingCartButton = () => {
   const items = useSelector((state: RootState) => state.cart.items);
-  const totalQuantity = items.reduce((total, item) => total + item.quantity, 0);
+
+  const totalQuantity =
+    items?.reduce((total, item) => total + (item.quantity || 0), 0) || 0;
+
   return (
     <Sheet>
       <SheetTrigger>

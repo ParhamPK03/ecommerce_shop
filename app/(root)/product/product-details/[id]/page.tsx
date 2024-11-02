@@ -5,7 +5,6 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import AddToCart from "../add-cart";
 import ProductCard from "@/components/Home/ProductCard";
-import { use } from "react"; // اضافه کردن use
 
 interface Product {
   id: number;
@@ -20,8 +19,8 @@ interface Product {
   };
 }
 
-const ProductDetails = ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = use(params); // استفاده از use برای unwrap کردن params
+const ProductDetails = ({ params }: { params: { id: string } }) => {
+  const { id } = params;
 
   const [singleProduct, setSingleProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
@@ -42,10 +41,12 @@ const ProductDetails = ({ params }: { params: Promise<{ id: string }> }) => {
   }, [id]);
 
   if (loading) {
-    return <div>Loading...</div>; // نمایش حالت بارگذاری
+    return <div>Loading...</div>;
   }
 
-  const num = Math.round(singleProduct?.rating?.rate);
+  if (!singleProduct) return null;
+
+  const num = Math.round(singleProduct.rating.rate);
   const starArray = new Array(num).fill(0);
 
   return (

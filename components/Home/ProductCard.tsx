@@ -2,12 +2,11 @@
 import { useToast } from "@/hooks/use-toast";
 import { addItem } from "@/store/cartSlice";
 import { Product } from "@/typing";
-import { RootState } from "@reduxjs/toolkit/query";
 import { HeartIcon, ShoppingBagIcon, StarIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 type Props = {
   product: Product;
@@ -51,10 +50,10 @@ const ProductCard = ({ product }: Props) => {
       </Link>
       {/* Rating  */}
       <div className="flex items-center">
-        {ratingArray.map((star) => {
+        {ratingArray.map((star, index) => {
           return (
             <StarIcon
-              key={Math.random() * 1000}
+              key={index}
               size={16}
               fill="yellow"
               className="text-yellow-500"
@@ -79,10 +78,10 @@ const ProductCard = ({ product }: Props) => {
           }}
           className="bg-black/80 text-white rounded-[6px] p-2"
         >
-          <ShoppingBagIcon size={18} className="hover:scale-125 duration-300"/>
+          <ShoppingBagIcon size={18} className="hover:scale-125 duration-300" />
         </button>
         <button className="bg-red-500 text-white rounded-[6px] p-2">
-          <HeartIcon size={18} className="hover:scale-125 duration-300"/>
+          <HeartIcon size={18} className="hover:scale-125 duration-300" />
         </button>
       </div>
     </div>
