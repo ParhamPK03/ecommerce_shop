@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import AddToCart from "../add-cart";
 import ProductCard from "@/components/Home/ProductCard";
 
-// اینترفیس برای داده‌های محصول
 interface Product {
   id: number;
   title: string;
@@ -24,7 +23,7 @@ interface PageProps {
   params: { id: string };
 }
 
-const ProductDetails = ({ params }: PageProps) => {
+const ProductDetails: React.FC<PageProps> = ({ params }) => {
   const { id } = params;
   const [singleProduct, setSingleProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
