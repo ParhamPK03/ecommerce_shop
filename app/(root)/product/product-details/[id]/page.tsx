@@ -19,6 +19,8 @@ interface Product {
   };
 }
 
+// You may not need to specify a type for `params` here,
+// or you can define it based on your route structure.
 const ProductDetails = ({ params }: { params: { id: string } }) => {
   const { id } = params;
 
