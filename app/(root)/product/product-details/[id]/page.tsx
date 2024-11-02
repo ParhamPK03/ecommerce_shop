@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import AddToCart from "../add-cart";
 import ProductCard from "@/components/Home/ProductCard";
 
+
 interface Product {
   id: number;
   title: string;
@@ -19,7 +20,8 @@ interface Product {
   };
 }
 
-const ProductDetails = ({ params }: { params: { id: string } }) => {
+
+const ProductDetails = ({ params }: { params: Record<string, string> }) => {
   const { id } = params;
 
   const [singleProduct, setSingleProduct] = useState<Product | null>(null);
