@@ -1,4 +1,5 @@
 "use client";
+
 import { getProductByCategory, getSingleProduct } from "@/Request/requests";
 import { StarIcon } from "lucide-react";
 import Image from "next/image";
@@ -19,46 +20,42 @@ interface Product {
   };
 }
 
-interface PageProps {
-  params: { id: string };
-}
-
-const ProductDetails = ({ params }: PageProps) => {
-  const { id } = params;
+const ProductDetails = ({ params }: { params: Promise<{ id: string }> }) => {
   const [singleProduct, setSingleProduct] = useState<Product | null>(null);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [id, setId] = useState<string>(""); // آیدی را در state ذخیره می‌کنیم
 
   useEffect(() => {
-    const fetchProductData = async () => {
-      setLoading(true);
-      try {
-        // دریافت اطلاعات محصول با استفاده از ID
+    const fetchParams = async () => {
+      const { id } = await params; // آیدی را از params باز می‌کنیم
+      setId(id);
+    };
+
+    fetchParams();
+  }, [params]);
+
+  useEffect(() => {
+    if (id) {
+      const fetchProductData = async () => {
         const product = await getSingleProduct(id);
         setSingleProduct(product);
 
-        // دریافت محصولات مرتبط بر اساس دسته‌بندی
-        if (product && product.category) {
-          const productsByCategory = await getProductByCategory(
-            product.category
-          );
-          setRelatedProducts(productsByCategory);
-        }
-      } catch (error) {
-        console.error("Error fetching product data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+        const productsByCategory = await getProductByCategory(product.category);
+        setRelatedProducts(productsByCategory);
 
-    fetchProductData();
+        setLoading(false);
+      };
+
+      fetchProductData();
+    }
   }, [id]);
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (!singleProduct) return <div>محصولی یافت نشد</div>;
+  if (!singleProduct) return null;
 
   const num = Math.round(singleProduct.rating.rate);
   const starArray = new Array(num).fill(0);
